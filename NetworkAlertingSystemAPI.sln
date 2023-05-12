@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkAlertingSystemAPI", "NetworkAlertingSystemAPI\NetworkAlertingSystemAPI.csproj", "{3B3215DA-EF1E-4BE4-B2AF-F8539654FAB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkAlertingSystemAPI.DataAccess", "NetworkAlertingSystemAPI.DataAccess\NetworkAlertingSystemAPI.DataAccess.csproj", "{D8CEE039-4E1E-4387-92C6-83B2C4076AF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkAlertingSystemAPI.Models", "NetworkAlertingSystemAPI.Models\NetworkAlertingSystemAPI.Models.csproj", "{654CEE92-74CF-4389-9303-A626811ADEA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B3215DA-EF1E-4BE4-B2AF-F8539654FAB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3215DA-EF1E-4BE4-B2AF-F8539654FAB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3215DA-EF1E-4BE4-B2AF-F8539654FAB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3215DA-EF1E-4BE4-B2AF-F8539654FAB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8CEE039-4E1E-4387-92C6-83B2C4076AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8CEE039-4E1E-4387-92C6-83B2C4076AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8CEE039-4E1E-4387-92C6-83B2C4076AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8CEE039-4E1E-4387-92C6-83B2C4076AF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{654CEE92-74CF-4389-9303-A626811ADEA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{654CEE92-74CF-4389-9303-A626811ADEA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{654CEE92-74CF-4389-9303-A626811ADEA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{654CEE92-74CF-4389-9303-A626811ADEA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68B85F39-D3E4-46C7-8FE2-9F47E12CF7C4}
+	EndGlobalSection
+EndGlobal
