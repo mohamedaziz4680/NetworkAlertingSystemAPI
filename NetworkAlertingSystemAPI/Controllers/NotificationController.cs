@@ -24,6 +24,7 @@ namespace NetworkAlertingSystemAPI.Controllers
         public async Task<ActionResult<Notification>> SendNotification(Notification notification)
         {
              _unitOfWork.Notification.Add(notification);
+            _unitOfWork.Save();
 
             await _hubContext.Clients.All.SendAsync("ReceiveNotification", notification);
 
@@ -64,6 +65,7 @@ namespace NetworkAlertingSystemAPI.Controllers
             notification.Status = "Seen";
 
              _unitOfWork.Notification.Update(notification);
+            _unitOfWork.Save();
 
             return NoContent();
         }

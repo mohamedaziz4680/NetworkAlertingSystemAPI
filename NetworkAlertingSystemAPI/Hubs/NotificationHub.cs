@@ -21,7 +21,7 @@ namespace NetworkAlertingSystemAPI.Hubs
             var user =  _unitOfWork.User.GetFirstOrDefault(u=>u.Id==userId);
             user.IsOnline = true;
              _unitOfWork.User.Update(user);
-
+            _unitOfWork.Save();
             await Clients.Group("subscribers").SendAsync("UpdateOnlineStatus", userId, true);
         }
 
@@ -32,6 +32,7 @@ namespace NetworkAlertingSystemAPI.Hubs
             var user =  _unitOfWork.User.GetFirstOrDefault(u=>u.Id==userId);
             user.IsOnline = false;
              _unitOfWork.User.Update(user);
+            _unitOfWork.Save();
 
             await Clients.Group("subscribers").SendAsync("UpdateOnlineStatus", userId, false);
         }
@@ -39,7 +40,7 @@ namespace NetworkAlertingSystemAPI.Hubs
         public async Task SendNotification(Notification notification)
         {
              _unitOfWork.Notification.Add(notification);
-
+            _unitOfWork.Save();
             await Clients.Group("subscribers").SendAsync("ReceiveNotification", notification);
         }
     }
