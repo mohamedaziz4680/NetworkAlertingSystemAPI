@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using NetworkAlertingSystemAPI.DataAccess.Repository;
 using NetworkAlertingSystemAPI.DataAccess.Repository.IRepository;
 using NetworkAlertingSystemAPI.Hubs;
 using NetworkAlertingSystemAPI.Models;
@@ -42,12 +43,33 @@ namespace NetworkAlertingSystemAPI.Controllers
 
             return Ok(user);
         }
-        //[Route("Post")]
-        //[HttpPost]
-        //public void Connect(int id)
-        //{
-        //    IHubContext context = GlobalHost.ConnectionManager.GetHubContext<NotificationHub>();
-        //}
+        [HttpPost("connect/{userId}")]
+        public async Task<IActionResult> Connect(int userId)
+        {
+            var user =  _unitOfWork.User.GetFirstOrDefault(u=>u.Id==userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _hubContext.Clients.All.SendAsync("UserConnected", user);
+
+            return Ok();
+        }
+
+        [HttpPost("disconnect/{userId}")]
+        public async Task<IActionResult> Disconnect(int userId)
+        {
+            var user =  _unitOfWork.User.GetFirstOrDefault(u=>u.Id==userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _hubContext.Clients.All.SendAsync("UserDisconnected", user);
+
+            return Ok();
+        }
     }
 }
 

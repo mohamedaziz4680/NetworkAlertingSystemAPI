@@ -25,7 +25,6 @@ namespace NetworkAlertingSystemAPI.Controllers
         {
              _unitOfWork.Notification.Add(notification);
 
-            // Broadcast the notification to all connected subscribers
             await _hubContext.Clients.All.SendAsync("ReceiveNotification", notification);
 
             return CreatedAtAction(nameof(GetNotificationStatus), new { id = notification.Id }, notification);
