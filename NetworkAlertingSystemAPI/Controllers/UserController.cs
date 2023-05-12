@@ -51,6 +51,7 @@ namespace NetworkAlertingSystemAPI.Controllers
             {
                 return NotFound();
             }
+            await _hubContext.Groups.AddToGroupAsync(user.Name.ToString(), "PublisherGroup");
 
             await _hubContext.Clients.All.SendAsync("UserConnected", user);
 
@@ -65,7 +66,7 @@ namespace NetworkAlertingSystemAPI.Controllers
             {
                 return NotFound();
             }
-
+            await _hubContext.Groups.RemoveFromGroupAsync(user.Name.ToString(),"PublisherGroup");
             await _hubContext.Clients.All.SendAsync("UserDisconnected", user);
 
             return Ok();
