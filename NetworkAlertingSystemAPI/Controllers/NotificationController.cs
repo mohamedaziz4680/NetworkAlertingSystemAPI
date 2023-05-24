@@ -4,9 +4,13 @@ using Microsoft.AspNetCore.SignalR;
 using NetworkAlertingSystemAPI.DataAccess.Repository.IRepository;
 using NetworkAlertingSystemAPI.Hubs;
 using NetworkAlertingSystemAPI.Models;
+using NetworkAlertingSystemAPI.Models.ViewModels;
+using System.Collections.Generic;
+
 
 namespace NetworkAlertingSystemAPI.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class NotificationController : ControllerBase
@@ -21,14 +25,28 @@ namespace NetworkAlertingSystemAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Notification>> SendNotification(Notification notification)
+        public async Task<ActionResult<Notification>> SendNotification(SendNotification sendNotification)
         {
-             _unitOfWork.Notification.Add(notification);
-            _unitOfWork.Save();
+            var dbUsers = new List<User>();
+            sendNotification.UsersIds.ForEach(i=> {
+                dbUsers.Add(_unitOfWork.User.GetFirstOrDefault(u => u.Id == i));
+            });
+            Notification notification = new Notification();
+            notification.AlertTitle = sendNotification.AlertTitle;
+            notification.SentTime = new DateTime().ToLocalTime();
+            notification.Status = "false";
+            _unitOfWork.Notification.Add(notification);
+            dbUsers.ForEach(i =>{
+                UsersNotifications usersNotifications = new UsersNotifications();
+                usersNotifications.User = i;
+                usersNotifications.Notification = notification;
+                _unitOfWork.UserNotification.Add(usersNotifications);
+            });
 
+            _unitOfWork.Save();
             await _hubContext.Clients.All.SendAsync("ReceiveNotification", notification);
 
-            return CreatedAtAction(nameof(GetNotificationStatus), new { id = notification.Id }, notification);
+            return Ok(notification);
         }
 
         [HttpGet("{id}")]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetworkAlertingSystemAPI.Data;
 
@@ -11,9 +12,11 @@ using NetworkAlertingSystemAPI.Data;
 namespace NetworkAlertingSystemAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230521200359_sync_changes")]
+    partial class sync_changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +44,12 @@ namespace NetworkAlertingSystemAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
                 });
@@ -91,6 +99,13 @@ namespace NetworkAlertingSystemAPI.Migrations
                     b.ToTable("UserNotifications");
                 });
 
+            modelBuilder.Entity("NetworkAlertingSystemAPI.Models.Notification", b =>
+                {
+                    b.HasOne("NetworkAlertingSystemAPI.Models.User", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("NetworkAlertingSystemAPI.Models.UsersNotifications", b =>
                 {
                     b.HasOne("NetworkAlertingSystemAPI.Models.Notification", "Notification")
@@ -100,7 +115,7 @@ namespace NetworkAlertingSystemAPI.Migrations
                         .IsRequired();
 
                     b.HasOne("NetworkAlertingSystemAPI.Models.User", "User")
-                        .WithMany("UsersNotifications")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -117,7 +132,7 @@ namespace NetworkAlertingSystemAPI.Migrations
 
             modelBuilder.Entity("NetworkAlertingSystemAPI.Models.User", b =>
                 {
-                    b.Navigation("UsersNotifications");
+                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

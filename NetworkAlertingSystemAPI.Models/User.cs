@@ -9,7 +9,7 @@ namespace NetworkAlertingSystemAPI.Models
         public int Id { get; set; }
         [Required]
         public int Name { get; set; }
-        public List<UsersNotifications> UserNotifications { get; set; }
+        public List<UsersNotifications> UsersNotifications { get; set; }
         [DefaultValue(false)]
         public bool IsOnline { get; set; }
 

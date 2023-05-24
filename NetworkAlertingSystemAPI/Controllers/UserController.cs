@@ -51,6 +51,9 @@ namespace NetworkAlertingSystemAPI.Controllers
             {
                 return NotFound();
             }
+            user.IsOnline = true;
+            _unitOfWork.User.Update(user);
+            _unitOfWork.Save();
             await _hubContext.Groups.AddToGroupAsync(user.Name.ToString(), "PublisherGroup");
 
             await _hubContext.Clients.All.SendAsync("UserConnected", user);
@@ -66,6 +69,10 @@ namespace NetworkAlertingSystemAPI.Controllers
             {
                 return NotFound();
             }
+
+            user.IsOnline = false;
+            _unitOfWork.User.Update(user);
+            _unitOfWork.Save();
             await _hubContext.Groups.RemoveFromGroupAsync(user.Name.ToString(),"PublisherGroup");
             await _hubContext.Clients.All.SendAsync("UserDisconnected", user);
 

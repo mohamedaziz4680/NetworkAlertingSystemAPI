@@ -14,10 +14,10 @@ namespace NetworkAlertingSystemAPI.Models
         public int Id { get; set; }
         public int UserId { get; set; }
         [ForeignKey("UserId")]
-        public User User { get; set; }
+        public User User { get; set; } = null;
         [ForeignKey("NotificationId")]
         public int NotificationId { get; set; }
-        public Notification Notification { get; set; }
+        public Notification Notification { get; set; } = null;
 
         public DateTime? SeenTime { get; set; }
     }
